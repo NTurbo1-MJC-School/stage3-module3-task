@@ -9,31 +9,31 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class TagRepository implements BaseRepository<TagEntity, Long> {
 
-    private final DataSource dataSource;
+    @PersistenceContext
+    private EntityManager entityManager;
     private final BaseRepository<NewsEntity, Long> newsRepository;
 
     public TagRepository(@Qualifier("newsRepository") BaseRepository newsRepository) {
-        this.dataSource = DataSource.getInstance();
         this.newsRepository = newsRepository;
     }
 
     @Override
     public List<TagEntity> readAll() {
-        return dataSource
-                .getEntityManager()
+        return entityManager
                 .createQuery("select tag from TagEntity tag")
                 .getResultList();
     }
 
     @Override
     public Optional<TagEntity> readById(Long id) {
-        TagEntity tagEntity = dataSource.getEntityManager().find(TagEntity.class, id);
+        TagEntity tagEntity = entityManager.find(TagEntity.class, id);
         return tagEntity != null ? Optional.of(tagEntity) : Optional.empty();
     }
 
@@ -43,7 +43,6 @@ public class TagRepository implements BaseRepository<TagEntity, Long> {
 
     @Override
     public TagEntity create(TagEntity entity) {
-        EntityManager entityManager = dataSource.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         try {
@@ -69,7 +68,6 @@ public class TagRepository implements BaseRepository<TagEntity, Long> {
 
     @Override
     public boolean deleteById(Long id) {
-        EntityManager entityManager = dataSource.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         try {

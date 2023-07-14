@@ -10,29 +10,30 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
-    private final DataSource dataSource;
+    @PersistenceContext
+    private EntityManager entityManager;
     private final BaseRepository<NewsEntity, Long> newsRepository;
 
     @Autowired
     public AuthorRepository(@Qualifier("newsRepository") BaseRepository newsRepository) {
-        this.dataSource = DataSource.getInstance();
         this.newsRepository = newsRepository;
     }
 
     @Override
     public List<AuthorEntity> readAll() {
-        return dataSource.getEntityManager()
+        return entityManager
                 .createQuery("select author from AuthorEntity author").getResultList();
     }
 
     @Override
     public Optional<AuthorEntity> readById(Long id) {
-        AuthorEntity authorEntity = dataSource.getEntityManager().find(AuthorEntity.class, id);
+        AuthorEntity authorEntity = entityManager.find(AuthorEntity.class, id);
         return authorEntity != null ? Optional.of(authorEntity) : Optional.empty();
     }
 
@@ -45,14 +46,14 @@ public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
     @Override
     public AuthorEntity create(AuthorEntity entity) {
         try {
-            dataSource.getEntityManager().getTransaction().begin();
+            entityManager.getTransaction().begin();
             if (entity.getId() == null) {
-                dataSource.getEntityManager().persist(entity);
+                entityManager.persist(entity);
             } else {
-                dataSource.getEntityManager().merge(entity);
+                entityManager.merge(entity);
             }
 
-            dataSource.getEntityManager().getTransaction().commit();
+            entityManager.getTransaction().commit();
             return entity;
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +68,6 @@ public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
 
     @Override
     public boolean deleteById(Long id) {
-        EntityManager entityManager = dataSource.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         try {

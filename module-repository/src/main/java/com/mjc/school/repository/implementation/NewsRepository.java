@@ -7,27 +7,27 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class NewsRepository implements BaseRepository<NewsEntity, Long> {
 
-  private final DataSource dataSource;
+  @PersistenceContext
+  private EntityManager entityManager;
 
-  public NewsRepository() {
-    this.dataSource = DataSource.getInstance();
-  }
+  public NewsRepository() {}
 
   @Override
   public List<NewsEntity> readAll() {
-    return dataSource.getEntityManager()
+    return entityManager
             .createQuery("select news from NewsEntity news").getResultList();
   }
 
   @Override
   public Optional<NewsEntity> readById(Long newsId) {
-    NewsEntity newsEntity = dataSource.getEntityManager().find(NewsEntity.class, newsId);
+    NewsEntity newsEntity = entityManager.find(NewsEntity.class, newsId);
     return newsEntity != null ? Optional.of(newsEntity) : Optional.empty();
   }
 
@@ -35,14 +35,14 @@ public class NewsRepository implements BaseRepository<NewsEntity, Long> {
   public NewsEntity create(NewsEntity entity) {
 
     try {
-      dataSource.getEntityManager().getTransaction().begin();
+      entityManager.getTransaction().begin();
       if (entity.getId() == null) {
-        dataSource.getEntityManager().persist(entity);
+        entityManager.persist(entity);
       } else {
-        dataSource.getEntityManager().merge(entity);
+        entityManager.merge(entity);
       }
 
-      dataSource.getEntityManager().getTransaction().commit();
+      entityManager.getTransaction().commit();
       return entity;
     } catch (Exception e) {
       e.printStackTrace();
@@ -57,7 +57,6 @@ public class NewsRepository implements BaseRepository<NewsEntity, Long> {
 
   @Override
   public boolean deleteById(Long newsId) {
-    EntityManager entityManager = dataSource.getEntityManager();
     EntityTransaction transaction = entityManager.getTransaction();
 
     try {

@@ -68,7 +68,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
         tagValidator.validateTagDto(dtoRequest);
         TagEntity entity = mapper.dtoToTagEntity(dtoRequest);
 
-        try {
+        if (dtoRequest.newsIds() != null) {
             List<NewsEntity> newsEntities = new ArrayList<>();
 
             for (Long newsId : dtoRequest.newsIds()) {
@@ -77,10 +77,8 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
             }
 
             entity.setNewsEntities(newsEntities);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("News id will be empty.");
-            entity.setNewsEntities(new ArrayList<>());
+        } else {
+            entity.setNewsEntities(null);
         }
 
         TagEntity tagEntity = tagRepository.create(entity);
@@ -94,7 +92,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
 
         if (tagRepository.existById(dtoRequest.id())) {
             TagEntity entity = mapper.dtoToTagEntity(dtoRequest);
-            try {
+            if (dtoRequest.newsIds() != null) {
                 List<NewsEntity> newsEntities = new ArrayList<>();
 
                 for (Long newsId : dtoRequest.newsIds()) {
@@ -103,10 +101,8 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
                 }
 
                 entity.setNewsEntities(newsEntities);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                System.out.println("News id will be empty.");
-                entity.setNewsEntities(new ArrayList<>());
+            } else {
+                entity.setNewsEntities(null);
             }
 
             TagEntity tagEntity = tagRepository.update(entity);

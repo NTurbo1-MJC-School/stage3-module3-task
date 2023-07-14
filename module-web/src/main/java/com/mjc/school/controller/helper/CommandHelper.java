@@ -30,14 +30,16 @@ public class CommandHelper {
     List<Long> enter = new ArrayList<>();
     try {
       String input = keyboard.nextLine();
-      keyboard.nextLine();
+
+      if (input.equals("null")) {
+        return null;
+      }
 
       String[] numbers = input.split(",\s*");
       for (String number : numbers) {
         enter.add(Long.parseLong(number));
       }
     } catch (Exception ex) {
-      keyboard.nextLine();
       throw new ValidatorException(
               String.format(ServiceErrorCode.VALIDATE_INT_VALUE.getMessage(), params));
     }

@@ -23,7 +23,9 @@ public interface ModelMapper {
 
   @Mappings({
     @Mapping(target = "createDate", ignore = true),
-    @Mapping(target = "lastUpdatedDate", ignore = true)
+    @Mapping(target = "lastUpdatedDate", ignore = true),
+    @Mapping(target = "author", ignore = true),
+    @Mapping(target = "tags", ignore = true)
   })
   NewsEntity dtoToAuthorEntity(NewsDtoRequest newsDtoRequest);
   AuthorEntity dtoToAuthorEntity(AuthorDtoRequest authorDtoRequest);

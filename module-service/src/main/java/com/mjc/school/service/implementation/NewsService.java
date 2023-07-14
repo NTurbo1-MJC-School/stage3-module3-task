@@ -70,7 +70,7 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
 
     entity.setAuthor(authorRepository.readById(dtoRequest.authorId()).get());
 
-    try {
+    if (dtoRequest.tagIds() != null) {
       List<TagEntity> tags = new ArrayList<>();
       for (Long tagId : dtoRequest.tagIds()) {
         tagValidator.validateTagId(tagId);
@@ -78,11 +78,10 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
       }
 
       entity.setTags(tags);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      System.out.println("Tag ids will be empty.");
-      entity.setTags(new ArrayList<>());
+    } else {
+      entity.setTags(null);
     }
+
     LocalDateTime date = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     entity.setCreateDate(date);
     entity.setLastUpdatedDate(date);
@@ -99,7 +98,7 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
       NewsEntity entity = mapper.dtoToAuthorEntity(dtoRequest);
       entity.setAuthor(authorRepository.readById(dtoRequest.authorId()).get());
 
-      try {
+      if (dtoRequest.tagIds() != null) {
         List<TagEntity> tags = new ArrayList<>();
         for (Long tagId : dtoRequest.tagIds()) {
           tagValidator.validateTagId(tagId);
@@ -107,10 +106,8 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
         }
 
         entity.setTags(tags);
-      } catch (Exception e) {
-        System.out.println(e.getMessage());
-        System.out.println("Tag ids will be empty.");
-        entity.setTags(new ArrayList<>());
+      } else {
+        entity.setTags(null);
       }
 
       LocalDateTime date = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);

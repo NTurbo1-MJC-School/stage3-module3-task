@@ -3,7 +3,6 @@ package com.mjc.school.repository.implementation;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
 import com.mjc.school.repository.model.implementation.NewsEntity;
-import com.mjc.school.repository.utils.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -11,18 +10,20 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
-    @PersistenceContext
     private EntityManager entityManager;
     private final BaseRepository<NewsEntity, Long> newsRepository;
 
     @Autowired
-    public AuthorRepository(@Qualifier("newsRepository") BaseRepository newsRepository) {
+    public AuthorRepository(@Qualifier("newsRepository") BaseRepository newsRepository,
+                            EntityManager entityManager) {
         this.newsRepository = newsRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -56,8 +57,11 @@ public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
             entityManager.getTransaction().commit();
             return entity;
         } catch (Exception e) {
+            entityManager.getTransaction().rollback();
             e.printStackTrace();
         }
+
+        entityManager.close();
         return null;
     }
 
@@ -82,9 +86,11 @@ public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
 
             return true;
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
 
+        entityManager.close();
         return false;
     }
 

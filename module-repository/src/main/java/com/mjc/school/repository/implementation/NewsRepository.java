@@ -3,6 +3,7 @@ package com.mjc.school.repository.implementation;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.implementation.NewsEntity;
 import com.mjc.school.repository.utils.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,11 +14,12 @@ import java.util.Optional;
 
 @Repository
 public class NewsRepository implements BaseRepository<NewsEntity, Long> {
-
-  @PersistenceContext
   private EntityManager entityManager;
 
-  public NewsRepository() {}
+  @Autowired
+  public NewsRepository(EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
 
   @Override
   public List<NewsEntity> readAll() {
@@ -45,8 +47,11 @@ public class NewsRepository implements BaseRepository<NewsEntity, Long> {
       entityManager.getTransaction().commit();
       return entity;
     } catch (Exception e) {
+      entityManager.getTransaction().rollback();
       e.printStackTrace();
     }
+
+    entityManager.close();
     return null;
   }
 
@@ -71,9 +76,11 @@ public class NewsRepository implements BaseRepository<NewsEntity, Long> {
 
       return true;
     } catch (Exception e) {
+      transaction.rollback();
       e.printStackTrace();
     }
 
+    entityManager.close();
     return false;
   }
 

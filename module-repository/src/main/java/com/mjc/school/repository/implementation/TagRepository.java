@@ -4,6 +4,7 @@ import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.implementation.NewsEntity;
 import com.mjc.school.repository.model.implementation.TagEntity;
 import com.mjc.school.repository.utils.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -15,13 +16,14 @@ import java.util.Optional;
 
 @Repository
 public class TagRepository implements BaseRepository<TagEntity, Long> {
-
-    @PersistenceContext
     private EntityManager entityManager;
     private final BaseRepository<NewsEntity, Long> newsRepository;
 
-    public TagRepository(@Qualifier("newsRepository") BaseRepository newsRepository) {
+    @Autowired
+    public TagRepository(@Qualifier("newsRepository") BaseRepository newsRepository,
+                         EntityManager entityManager) {
         this.newsRepository = newsRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -56,8 +58,11 @@ public class TagRepository implements BaseRepository<TagEntity, Long> {
             transaction.commit();
             return entity;
         } catch (Exception e) {
+            transaction.rollback();
             e.printStackTrace();
         }
+
+        entityManager.close();
         return null;
     }
 

@@ -3,28 +3,21 @@ package com.mjc.school.repository.implementation;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
 import com.mjc.school.repository.model.implementation.NewsEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
+    @PersistenceContext
     private EntityManager entityManager;
-    private final BaseRepository<NewsEntity, Long> newsRepository;
+    @Qualifier("newsRepository")
+    private BaseRepository<NewsEntity, Long> newsRepository;
 
-    @Autowired
-    public AuthorRepository(@Qualifier("newsRepository") BaseRepository newsRepository,
-                            EntityManager entityManager) {
-        this.newsRepository = newsRepository;
-        this.entityManager = entityManager;
-    }
+    public AuthorRepository() {}
 
     @Override
     public List<AuthorEntity> readAll() {

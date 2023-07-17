@@ -16,15 +16,12 @@ import java.util.Optional;
 
 @Repository
 public class TagRepository implements BaseRepository<TagEntity, Long> {
+    @PersistenceContext
     private EntityManager entityManager;
-    private final BaseRepository<NewsEntity, Long> newsRepository;
+    @Qualifier("newsRepository")
+    private BaseRepository<NewsEntity, Long> newsRepository;
 
-    @Autowired
-    public TagRepository(@Qualifier("newsRepository") BaseRepository newsRepository,
-                         EntityManager entityManager) {
-        this.newsRepository = newsRepository;
-        this.entityManager = entityManager;
-    }
+    public TagRepository() {}
 
     @Override
     public List<TagEntity> readAll() {

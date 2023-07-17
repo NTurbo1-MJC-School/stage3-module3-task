@@ -14,12 +14,10 @@ import java.util.Optional;
 
 @Repository
 public class NewsRepository implements BaseRepository<NewsEntity, Long> {
+  @PersistenceContext
   private EntityManager entityManager;
 
-  @Autowired
-  public NewsRepository(EntityManager entityManager) {
-    this.entityManager = entityManager;
-  }
+  public NewsRepository() {}
 
   @Override
   public List<NewsEntity> readAll() {

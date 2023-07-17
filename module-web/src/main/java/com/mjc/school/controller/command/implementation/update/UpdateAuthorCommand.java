@@ -1,6 +1,6 @@
 package com.mjc.school.controller.command.implementation.update;
 
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
@@ -17,11 +17,11 @@ import java.util.Scanner;
 @Component
 public class UpdateAuthorCommand implements Command {
 
-    private BaseController authorController;
+    private AuthorControllerInterface authorController;
     private Scanner keyboard;
 
     @Autowired
-    public UpdateAuthorCommand(@Qualifier("authorController") BaseController authorController) {
+    public UpdateAuthorCommand(@Qualifier("authorController") AuthorControllerInterface authorController) {
         this.authorController = authorController;
         this.keyboard = new Scanner(System.in);
     }

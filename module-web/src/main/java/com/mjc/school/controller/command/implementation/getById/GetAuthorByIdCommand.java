@@ -1,6 +1,6 @@
 package com.mjc.school.controller.command.implementation.getById;
 
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
@@ -15,11 +15,11 @@ import java.util.Scanner;
 @Component
 public class GetAuthorByIdCommand implements Command {
 
-    private BaseController authorController;
+    private AuthorControllerInterface authorController;
     private Scanner keyboard;
 
     @Autowired
-    public GetAuthorByIdCommand(@Qualifier("authorController") BaseController authorController) {
+    public GetAuthorByIdCommand(@Qualifier("authorController") AuthorControllerInterface authorController) {
         this.authorController = authorController;
         this.keyboard = new Scanner(System.in);
     }

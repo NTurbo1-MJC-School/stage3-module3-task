@@ -1,6 +1,6 @@
 package com.mjc.school.controller.command.implementation.getAll;
 
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.TagControllerInterface;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Operations;
@@ -14,10 +14,10 @@ import java.util.List;
 @Component
 public class GetAllTagsCommand implements Command {
 
-    private BaseController tagController;
+    private TagControllerInterface tagController;
 
     @Autowired
-    public GetAllTagsCommand(@Qualifier("tagController") BaseController tagController) {
+    public GetAllTagsCommand(@Qualifier("tagController") TagControllerInterface tagController) {
         this.tagController = tagController;
     }
     @Override

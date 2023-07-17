@@ -1,10 +1,10 @@
 package com.mjc.school.controller.command.implementation.create;
 
-import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
 import com.mjc.school.controller.helper.Operations;
+import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import com.mjc.school.service.dto.AuthorDtoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,11 +16,11 @@ import java.util.Scanner;
 @Component
 public class CreateAuthorCommand implements Command {
 
-    private BaseController authorController;
+    private AuthorControllerInterface authorController;
     private Scanner keyboard;
 
     @Autowired
-    public CreateAuthorCommand(@Qualifier("authorController") BaseController authorController) {
+    public CreateAuthorCommand(@Qualifier("authorController") AuthorControllerInterface authorController) {
         this.authorController = authorController;
         this.keyboard = new Scanner(System.in);
     }

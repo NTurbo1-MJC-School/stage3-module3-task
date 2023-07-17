@@ -7,6 +7,7 @@ import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDtoRequest;
 import com.mjc.school.service.dto.AuthorDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
+import com.mjc.school.service.interfaces.AuthorServiceInterface;
 import com.mjc.school.service.utils.ModelMapper;
 import com.mjc.school.service.validator.AuthorValidator;
 import com.mjc.school.service.validator.NewsValidator;
@@ -20,7 +21,7 @@ import java.util.List;
 import static com.mjc.school.service.exceptions.ServiceErrorCode.AUTHOR_ID_DOES_NOT_EXIST;
 
 @Service
-public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoResponse, Long> {
+public class AuthorService implements AuthorServiceInterface {
 
     private final AuthorRepositoryInterface authorRepository;
     private final NewsRepositoryInterface newsRepository;
@@ -56,6 +57,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
         }
     }
 
+    @Override
     public AuthorDtoResponse readByNewsId(Long newsId) {
         newsValidator.validateNewsId(newsId);
         return mapper.authorEntityToDto(

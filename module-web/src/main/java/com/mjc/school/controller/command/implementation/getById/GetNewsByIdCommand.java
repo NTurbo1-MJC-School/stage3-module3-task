@@ -1,7 +1,7 @@
 package com.mjc.school.controller.command.implementation.getById;
 
 import com.mjc.school.controller.command.Command;
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.NewsControllerInterface;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
 import com.mjc.school.controller.helper.Operations;
@@ -15,11 +15,11 @@ import java.util.Scanner;
 @Component
 public class GetNewsByIdCommand implements Command {
 
-    private BaseController newsController;
+    private NewsControllerInterface newsController;
     private Scanner keyboard;
 
     @Autowired
-    public GetNewsByIdCommand(@Qualifier("newsController") BaseController newsController) {
+    public GetNewsByIdCommand(@Qualifier("newsController") NewsControllerInterface newsController) {
         this.newsController = newsController;
         this.keyboard = new Scanner(System.in);
     }

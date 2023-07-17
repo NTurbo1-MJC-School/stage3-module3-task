@@ -1,6 +1,6 @@
 package com.mjc.school.controller.command.implementation.getById;
 
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.TagControllerInterface;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
@@ -15,11 +15,11 @@ import java.util.Scanner;
 @Component
 public class GetTagByIdCommand implements Command {
 
-    private BaseController tagController;
+    private TagControllerInterface tagController;
     private Scanner keyboard;
 
     @Autowired
-    public GetTagByIdCommand(@Qualifier("tagController") BaseController tagController) {
+    public GetTagByIdCommand(@Qualifier("tagController") TagControllerInterface tagController) {
         this.tagController = tagController;
         this.keyboard = new Scanner(System.in);
     }

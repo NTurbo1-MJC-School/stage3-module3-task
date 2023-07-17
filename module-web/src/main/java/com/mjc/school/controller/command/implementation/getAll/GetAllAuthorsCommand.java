@@ -1,10 +1,9 @@
 package com.mjc.school.controller.command.implementation.getAll;
 
-import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Operations;
-import com.mjc.school.service.dto.AuthorDtoResponse;
+import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -15,10 +14,10 @@ import java.util.List;
 @Component
 public class GetAllAuthorsCommand implements Command {
 
-    private BaseController authorController;
+    private AuthorControllerInterface authorController;
 
     @Autowired
-    public GetAllAuthorsCommand(@Qualifier("authorController") BaseController authorController) {
+    public GetAllAuthorsCommand(@Qualifier("authorController") AuthorControllerInterface authorController) {
         this.authorController = authorController;
     }
     @Override

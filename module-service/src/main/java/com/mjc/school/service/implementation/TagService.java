@@ -8,6 +8,7 @@ import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.TagDtoRequest;
 import com.mjc.school.service.dto.TagDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
+import com.mjc.school.service.interfaces.TagServiceInterface;
 import com.mjc.school.service.utils.ModelMapper;
 import com.mjc.school.service.validator.NewsValidator;
 import com.mjc.school.service.validator.TagValidator;
@@ -22,7 +23,7 @@ import java.util.List;
 import static com.mjc.school.service.exceptions.ServiceErrorCode.TAG_ID_DOES_NOT_EXIST;
 
 @Service
-public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Long> {
+public class TagService implements TagServiceInterface {
 
     private final TagRepositoryInterface tagRepository;
     private final NewsRepositoryInterface newsRepository;
@@ -57,6 +58,7 @@ public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Lo
         }
     }
 
+    @Override
     public List<TagDtoResponse> readByNewsId(Long newsId) {
         return mapper.tagEntityListToDtoList(
                 tagRepository.readByNewsId(newsId)

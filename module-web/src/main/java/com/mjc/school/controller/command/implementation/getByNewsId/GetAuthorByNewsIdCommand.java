@@ -4,8 +4,9 @@ import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
 import com.mjc.school.controller.helper.Operations;
-import com.mjc.school.controller.implementation.AuthorController;
+import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,11 +14,11 @@ import java.util.Scanner;
 
 @Component
 public class GetAuthorByNewsIdCommand implements Command {
-    private final AuthorController authorController;
+    private final AuthorControllerInterface authorController;
     private Scanner keyboard;
 
     @Autowired
-    public GetAuthorByNewsIdCommand(AuthorController authorController) {
+    public GetAuthorByNewsIdCommand(@Qualifier("authorController") AuthorControllerInterface authorController) {
         this.authorController = authorController;
         this.keyboard = new Scanner(System.in);
     }

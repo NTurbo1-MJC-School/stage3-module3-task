@@ -9,6 +9,7 @@ import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
+import com.mjc.school.service.interfaces.NewsServiceInterface;
 import com.mjc.school.service.utils.ModelMapper;
 import com.mjc.school.service.validator.NewsValidator;
 import com.mjc.school.service.validator.TagValidator;
@@ -25,7 +26,7 @@ import java.util.List;
 import static com.mjc.school.service.exceptions.ServiceErrorCode.NEWS_ID_DOES_NOT_EXIST;
 
 @Service
-public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse, Long> {
+public class NewsService implements NewsServiceInterface {
 
   private final NewsRepositoryInterface newsRepository;
   private final AuthorRepositoryInterface authorRepository;

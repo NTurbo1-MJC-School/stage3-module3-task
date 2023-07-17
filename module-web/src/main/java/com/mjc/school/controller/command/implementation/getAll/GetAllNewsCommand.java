@@ -1,7 +1,7 @@
 package com.mjc.school.controller.command.implementation.getAll;
 
 import com.mjc.school.controller.command.Command;
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.NewsControllerInterface;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Operations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ import java.util.List;
 @Component
 public class GetAllNewsCommand implements Command {
 
-    private BaseController newsController;
+    private NewsControllerInterface newsController;
 
     @Autowired
-    public GetAllNewsCommand(@Qualifier("newsController") BaseController newsController) {
+    public GetAllNewsCommand(@Qualifier("newsController") NewsControllerInterface newsController) {
         this.newsController = newsController;
     }
     @Override

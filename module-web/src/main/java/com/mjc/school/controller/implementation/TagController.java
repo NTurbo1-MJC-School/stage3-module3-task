@@ -2,6 +2,7 @@ package com.mjc.school.controller.implementation;
 
 import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.annotation.CommandHandler;
+import com.mjc.school.controller.interfaces.TagControllerInterface;
 import com.mjc.school.service.dto.TagDtoRequest;
 import com.mjc.school.service.dto.TagDtoResponse;
 import com.mjc.school.service.implementation.TagService;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
-public class TagController implements BaseController<TagDtoRequest, TagDtoResponse, Long> {
+public class TagController implements TagControllerInterface {
 
     private final TagService tagService;
 

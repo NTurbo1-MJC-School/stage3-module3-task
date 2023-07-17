@@ -1,6 +1,6 @@
 package com.mjc.school.controller.command.implementation.delete;
 
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
@@ -15,11 +15,11 @@ import java.util.Scanner;
 @Component
 public class DeleteAuthorCommand implements Command {
 
-    private BaseController authorController;
+    private AuthorControllerInterface authorController;
     private Scanner keyboard;
 
     @Autowired
-    public DeleteAuthorCommand(@Qualifier("authorController") BaseController authorController) {
+    public DeleteAuthorCommand(@Qualifier("authorController") AuthorControllerInterface authorController) {
         this.authorController = authorController;
         this.keyboard = new Scanner(System.in);
     }

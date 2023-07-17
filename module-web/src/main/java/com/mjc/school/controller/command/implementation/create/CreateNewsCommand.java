@@ -1,6 +1,6 @@
 package com.mjc.school.controller.command.implementation.create;
 
-import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.interfaces.NewsControllerInterface;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.helper.CommandHelper;
 import com.mjc.school.controller.helper.Constant;
@@ -17,11 +17,11 @@ import java.util.Scanner;
 @Component
 public class CreateNewsCommand implements Command {
 
-    private BaseController newsController;
+    private NewsControllerInterface newsController;
     private Scanner keyboard;
 
     @Autowired
-    public CreateNewsCommand(@Qualifier("newsController") BaseController newsController) {
+    public CreateNewsCommand(@Qualifier("newsController") NewsControllerInterface newsController) {
         this.newsController = newsController;
         this.keyboard = new Scanner(System.in);
     }

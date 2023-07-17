@@ -2,6 +2,7 @@ package com.mjc.school.controller.implementation;
 
 import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.annotation.CommandHandler;
+import com.mjc.school.controller.interfaces.NewsControllerInterface;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
-public class NewsController implements BaseController<NewsDtoRequest, NewsDtoResponse, Long> {
+public class NewsController implements NewsControllerInterface {
 
   private final BaseService<NewsDtoRequest, NewsDtoResponse, Long> newsService;
 

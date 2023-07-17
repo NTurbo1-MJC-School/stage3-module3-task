@@ -2,6 +2,7 @@ package com.mjc.school.controller.implementation;
 
 import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.annotation.CommandHandler;
+import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import com.mjc.school.service.dto.AuthorDtoRequest;
 import com.mjc.school.service.dto.AuthorDtoResponse;
 import com.mjc.school.service.implementation.AuthorService;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
-public class AuthorController implements BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> {
+public class AuthorController implements AuthorControllerInterface {
 
   private final AuthorService authorService;
 

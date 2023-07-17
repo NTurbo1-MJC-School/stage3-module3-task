@@ -3,7 +3,7 @@ package com.mjc.school.controller.implementation;
 import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.annotation.CommandHandler;
 import com.mjc.school.controller.interfaces.NewsControllerInterface;
-import com.mjc.school.service.BaseService;
+import com.mjc.school.service.interfaces.NewsServiceInterface;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 @Controller
 public class NewsController implements NewsControllerInterface {
 
-  private final BaseService<NewsDtoRequest, NewsDtoResponse, Long> newsService;
+  private final NewsServiceInterface newsService;
 
   @Autowired
-  public NewsController(@Qualifier("newsService") BaseService newsService) {
+  public NewsController(@Qualifier("newsService") NewsServiceInterface newsService) {
     this.newsService = newsService;
   }
 

@@ -5,8 +5,9 @@ import com.mjc.school.controller.annotation.CommandHandler;
 import com.mjc.school.controller.interfaces.TagControllerInterface;
 import com.mjc.school.service.dto.TagDtoRequest;
 import com.mjc.school.service.dto.TagDtoResponse;
-import com.mjc.school.service.implementation.TagService;
+import com.mjc.school.service.interfaces.TagServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -14,10 +15,10 @@ import java.util.List;
 @Controller
 public class TagController implements TagControllerInterface {
 
-    private final TagService tagService;
+    private final TagServiceInterface tagService;
 
     @Autowired
-    public TagController(TagService tagService) {
+    public TagController(@Qualifier("tagService") TagServiceInterface tagService) {
         this.tagService = tagService;
     }
 

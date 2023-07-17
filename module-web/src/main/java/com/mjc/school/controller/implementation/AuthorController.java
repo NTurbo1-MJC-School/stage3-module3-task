@@ -1,12 +1,12 @@
 package com.mjc.school.controller.implementation;
 
-import com.mjc.school.controller.BaseController;
 import com.mjc.school.controller.annotation.CommandHandler;
 import com.mjc.school.controller.interfaces.AuthorControllerInterface;
 import com.mjc.school.service.dto.AuthorDtoRequest;
 import com.mjc.school.service.dto.AuthorDtoResponse;
-import com.mjc.school.service.implementation.AuthorService;
+import com.mjc.school.service.interfaces.AuthorServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -14,10 +14,10 @@ import java.util.List;
 @Controller
 public class AuthorController implements AuthorControllerInterface {
 
-  private final AuthorService authorService;
+  private final AuthorServiceInterface authorService;
 
   @Autowired
-  public AuthorController(AuthorService authorService) {
+  public AuthorController(@Qualifier("authorService") AuthorServiceInterface authorService) {
     this.authorService = authorService;
   }
 

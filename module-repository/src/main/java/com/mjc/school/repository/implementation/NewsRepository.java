@@ -1,9 +1,7 @@
 package com.mjc.school.repository.implementation;
 
-import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.interfaces.NewsRepositoryInterface;
 import com.mjc.school.repository.model.implementation.NewsEntity;
-import com.mjc.school.repository.utils.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class NewsRepository implements BaseRepository<NewsEntity, Long> {
+public class NewsRepository implements NewsRepositoryInterface {
   @PersistenceContext
   private EntityManager entityManager;
 

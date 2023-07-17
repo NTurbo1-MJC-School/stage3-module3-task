@@ -1,7 +1,8 @@
 package com.mjc.school.service.implementation;
 
-import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.model.implementation.AuthorEntity;
+import com.mjc.school.repository.interfaces.AuthorRepositoryInterface;
+import com.mjc.school.repository.interfaces.NewsRepositoryInterface;
+import com.mjc.school.repository.interfaces.TagRepositoryInterface;
 import com.mjc.school.repository.model.implementation.NewsEntity;
 import com.mjc.school.repository.model.implementation.TagEntity;
 import com.mjc.school.service.BaseService;
@@ -26,17 +27,17 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.NEWS_ID_DOES_NO
 @Service
 public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse, Long> {
 
-  private final BaseRepository<NewsEntity, Long> newsRepository;
-  private final BaseRepository<AuthorEntity, Long> authorRepository;
-  private final BaseRepository<TagEntity, Long> tagRepository;
+  private final NewsRepositoryInterface newsRepository;
+  private final AuthorRepositoryInterface authorRepository;
+  private final TagRepositoryInterface tagRepository;
   private final NewsValidator newsValidator;
   private final TagValidator tagValidator;
   private ModelMapper mapper = Mappers.getMapper(ModelMapper.class);
 
   @Autowired
-  public NewsService(@Qualifier("newsRepository") BaseRepository newsRepository,
-                     @Qualifier("authorRepository") BaseRepository authorRepository,
-                     @Qualifier("tagRepository") BaseRepository tagRepository,
+  public NewsService(@Qualifier("newsRepository") NewsRepositoryInterface newsRepository,
+                     @Qualifier("authorRepository") AuthorRepositoryInterface authorRepository,
+                     @Qualifier("tagRepository") TagRepositoryInterface tagRepository,
                      NewsValidator newsValidator,
                      TagValidator tagValidator) {
     this.newsRepository = newsRepository;

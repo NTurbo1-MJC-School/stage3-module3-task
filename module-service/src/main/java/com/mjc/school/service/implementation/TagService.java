@@ -1,7 +1,7 @@
 package com.mjc.school.service.implementation;
 
-import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.implementation.TagRepository;
+import com.mjc.school.repository.interfaces.NewsRepositoryInterface;
+import com.mjc.school.repository.interfaces.TagRepositoryInterface;
 import com.mjc.school.repository.model.implementation.NewsEntity;
 import com.mjc.school.repository.model.implementation.TagEntity;
 import com.mjc.school.service.BaseService;
@@ -24,15 +24,15 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.TAG_ID_DOES_NOT
 @Service
 public class TagService implements BaseService<TagDtoRequest, TagDtoResponse, Long> {
 
-    private final TagRepository tagRepository;
-    private final BaseRepository<NewsEntity, Long> newsRepository;
+    private final TagRepositoryInterface tagRepository;
+    private final NewsRepositoryInterface newsRepository;
     private final TagValidator tagValidator;
     private final NewsValidator newsValidator;
     private ModelMapper mapper = Mappers.getMapper(ModelMapper.class);
 
     @Autowired
-    public TagService(TagRepository tagRepository,
-                      @Qualifier("newsRepository") BaseRepository newsRepository,
+    public TagService(TagRepositoryInterface tagRepository,
+                      @Qualifier("newsRepository") NewsRepositoryInterface newsRepository,
                       TagValidator tagValidator,
                       NewsValidator newsValidator) {
         this.tagRepository = tagRepository;

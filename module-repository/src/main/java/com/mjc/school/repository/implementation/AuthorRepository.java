@@ -1,6 +1,7 @@
 package com.mjc.school.repository.implementation;
 
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.interfaces.AuthorRepositoryInterface;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
 import com.mjc.school.repository.model.implementation.NewsEntity;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
+public class AuthorRepository implements AuthorRepositoryInterface {
     @PersistenceContext
     private EntityManager entityManager;
     @Qualifier("newsRepository")
@@ -31,6 +32,7 @@ public class AuthorRepository implements BaseRepository<AuthorEntity, Long> {
         return authorEntity != null ? Optional.of(authorEntity) : Optional.empty();
     }
 
+    @Override
     public Optional<AuthorEntity> readByNewsId(Long newsId) {
         return readById(
                 newsRepository.readById(newsId).get().getAuthor().getId()

@@ -1,10 +1,9 @@
 package com.mjc.school.repository.implementation;
 
 import com.mjc.school.repository.BaseRepository;
+import com.mjc.school.repository.interfaces.TagRepositoryInterface;
 import com.mjc.school.repository.model.implementation.NewsEntity;
 import com.mjc.school.repository.model.implementation.TagEntity;
-import com.mjc.school.repository.utils.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class TagRepository implements BaseRepository<TagEntity, Long> {
+public class TagRepository implements TagRepositoryInterface {
     @PersistenceContext
     private EntityManager entityManager;
     @Qualifier("newsRepository")
@@ -36,6 +35,7 @@ public class TagRepository implements BaseRepository<TagEntity, Long> {
         return tagEntity != null ? Optional.of(tagEntity) : Optional.empty();
     }
 
+    @Override
     public List<TagEntity> readByNewsId(Long newsId) {
         return newsRepository.readById(newsId).get().getTags();
     }

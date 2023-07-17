@@ -1,9 +1,8 @@
 package com.mjc.school.service.implementation;
 
-import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.implementation.AuthorRepository;
+import com.mjc.school.repository.interfaces.AuthorRepositoryInterface;
+import com.mjc.school.repository.interfaces.NewsRepositoryInterface;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
-import com.mjc.school.repository.model.implementation.NewsEntity;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.AuthorDtoRequest;
 import com.mjc.school.service.dto.AuthorDtoResponse;
@@ -23,15 +22,15 @@ import static com.mjc.school.service.exceptions.ServiceErrorCode.AUTHOR_ID_DOES_
 @Service
 public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoResponse, Long> {
 
-    private final AuthorRepository authorRepository;
-    private final BaseRepository<NewsEntity, Long> newsRepository;
+    private final AuthorRepositoryInterface authorRepository;
+    private final NewsRepositoryInterface newsRepository;
     private final AuthorValidator authorValidator;
     private final NewsValidator newsValidator;
     private ModelMapper mapper = Mappers.getMapper(ModelMapper.class);
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository,
-                         @Qualifier("newsRepository") BaseRepository newsRepository,
+    public AuthorService(AuthorRepositoryInterface authorRepository,
+                         @Qualifier("newsRepository") NewsRepositoryInterface newsRepository,
                          AuthorValidator authorValidator,
                          NewsValidator newsValidator) {
         this.authorRepository = authorRepository;
